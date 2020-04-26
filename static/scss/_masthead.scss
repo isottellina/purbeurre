@@ -31,3 +31,10 @@ header.masthead {
     }
   }
 }
+
+header.masthead.cropped {
+    @include media-breakpoint-up(lg) {
+	height: 50vh !important;
+	min-height: 20rem;
+    }
+}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mentions légales{% endblock %}
+
+{% block content %}
+<!-- Simplified masthead -->
+<header class="masthead cropped">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center justify-content-center text-center">
+      <div class="col-lg-10 align-self-end">
+        <h1 class="text-uppercase text-white font-weight-bold">Mentions légales</h1>
+        <hr class="divider my-4" />
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="page-section" id="legal">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        <h2 class="mt-0">Crédits</h2>
+        <hr class="divider my-4" />
+	<div class="mb-5">
+	  <ul>
+	    <li>
+	      Le thème est <em>Creative</em>, de <strong>Blackrock Digital LLC</strong>. La licence est <a href="{% static 'home/notices/blackrock.txt' %}">ici</a>.
+	    </li>
+	    <li>
+	      La photo de couverture est par <a href="https://unsplash.com/@kawin">Kawin Harasai</a>, et est disponible <a href="https://unsplash.com/photos/k60JspcBwKE">ici</a>.
+	    </li>
+	    <li>
+	      La carotte est Fabien Jouin, du <strong>Noun Project</strong>. Elle est disponible <a href="https://thenounproject.com/term/carrot/29691/">ici</a>.
+	    </li>
+	  </ul>
+	</div>
+      </div>
+    </div>
+</section>
+{% endblock %}
