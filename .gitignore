@@ -1,0 +1,9 @@
+# Generic python
+env
+__pycache__
+
+# django
+db.sqlite3
+
+# css cache
+/static/CACHE
