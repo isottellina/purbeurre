@@ -3,7 +3,7 @@
 # Filename: views.py
 # Author: Louise <louise>
 # Created: Mon Apr 27 14:00:21 2020 (+0200)
-# Last-Updated: Mon Apr 27 23:48:14 2020 (+0200)
+# Last-Updated: Tue Apr 28 00:59:46 2020 (+0200)
 #           By: Louise <louise>
 #
 from django.http import HttpResponse, HttpResponseRedirect
@@ -23,15 +23,17 @@ def signup(request):
         return render(request, "users/signup.html")
     elif request.method == "POST":
         user_form = UserForm(request.POST)
-        
         if user_form.is_valid():
             user_already_exists = User.objects.filter(
                 username=user_form.cleaned_data['username']
             ).exists()
             
             if user_already_exists:
-                # If the user already exists, fail.
-                return render(request, "users/signup.html")
+                # If the user already exists, fail with a
+                # HTTP 409 Conflict code.
+                return render(request,
+                              "users/signup.html",
+                              status=409)
             
             user = User.objects.create(
                 username=user_form.cleaned_data['username'],
@@ -45,7 +47,8 @@ def signup(request):
             login(request, user)
             return HttpResponseRedirect(reverse('home:index'))
         else:
-            return render(request, "users/signup.html")
+            # Return a HTTP 400 Bad Request code
+            return render(request, "users/signup.html", status=400)
 
 def signin(request):
     if request.method == "GET":

@@ -3,21 +3,20 @@
 # Filename: tests.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 00:19:58 2020 (+0200)
-# Last-Updated: Tue Apr 28 00:23:31 2020 (+0200)
+# Last-Updated: Tue Apr 28 00:41:01 2020 (+0200)
 #           By: Louise <louise>
 # 
-from django.test import TestCase
-from django.test import Client
+from django.test import SimpleTestCase
 
-class HomeTest(TestCase):
+class HomeTest(SimpleTestCase):
     def test_index(self):
-        client = Client()
-        response = client.get('/')
+        response = self.client.get('/')
 
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('home/index.html')
 
     def test_legal(self):
-        client = Client()
-        response = client.get('/legal')
+        response = self.client.get('/legal')
 
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('home/legal.html')
