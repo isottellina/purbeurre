@@ -3,12 +3,13 @@
 # Filename: views.py
 # Author: Louise <louise>
 # Created: Mon Apr 27 14:00:21 2020 (+0200)
-# Last-Updated: Mon Apr 27 21:31:43 2020 (+0200)
+# Last-Updated: Mon Apr 27 21:35:19 2020 (+0200)
 #           By: Louise <louise>
 #
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
+from django.contrib.auth import login
 from django.contrib.auth.models import User
 
 from .forms import UserForm
@@ -31,6 +32,7 @@ def signup(request):
             )
 
             user.save()
+            login(request, user)
             return HttpResponseRedirect(reverse('home:index'))
         else:
             return render(request, "users/signup.html")
