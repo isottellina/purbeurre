@@ -3,7 +3,7 @@
 # Filename: views.py
 # Author: Louise <louise>
 # Created: Mon Apr 27 14:00:21 2020 (+0200)
-# Last-Updated: Tue Apr 28 01:32:31 2020 (+0200)
+# Last-Updated: Tue Apr 28 01:35:48 2020 (+0200)
 #           By: Louise <louise>
 #
 from django.http import HttpResponse, HttpResponseRedirect

@@ -3,12 +3,14 @@
 # Filename: tests.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 00:31:16 2020 (+0200)
-# Last-Updated: Tue Apr 28 01:30:20 2020 (+0200)
+# Last-Updated: Tue Apr 28 01:52:23 2020 (+0200)
 #           By: Louise <louise>
-# 
+#
 from django.test import TransactionTestCase
 from django.contrib.auth import get_user
 from django.contrib.auth.models import User
+
+from .views import signout as signout_view
 
 class TestUserCreate(TransactionTestCase):
     def setUp(self):
@@ -128,3 +130,68 @@ class TestUserLogin(TransactionTestCase):
 
         self.assertRedirects(response, '/')
         self.assertEqual(get_user(self.client).is_authenticated, True)
+
+    def test_login_success_next(self):
+        response = self.client.post('/user/signin', {
+            "username": self.username,
+            "password": self.password,
+            "next": "/user/account"
+        })
+
+        self.assertRedirects(response, '/user/account')
+        self.assertEqual(get_user(self.client).is_authenticated, True)
+
+class TestUserLogout(TransactionTestCase):
+    def setUp(self):
+        self.username = 'user1'
+        self.password = 'password'
+        
+        self.user = User.objects.create_user(
+            username=self.username,
+            first_name='Chantal',
+            email='chantal@beauregard.com',
+            password=self.password
+        )
+
+    def test_signout(self):
+        # Sign in first
+        signin_response = self.client.post("/user/signin", {
+            "username": self.username,
+            "password": self.password
+        })
+        self.assertEqual(get_user(self.client).is_authenticated, True)
+
+        # Then logout and check if it worked
+        response = self.client.get("/user/signout")
+
+        self.assertRedirects(response, '/')
+        self.assertEqual(get_user(self.client).is_authenticated, False)
+
+class TestUserAccount(TransactionTestCase):
+    def setUp(self):
+        self.username = 'user1'
+        self.password = 'password'
+        
+        self.user = User.objects.create_user(
+            username=self.username,
+            first_name='Chantal',
+            email='chantal@beauregard.com',
+            password=self.password
+        )
+
+    def test_not_logged_in(self):
+        response = self.client.get("/user/account")
+        
+        self.assertRedirects(response, "/user/signin?next=/user/account")
+
+    def test_success(self):
+        # Sign in first
+        signin_response = self.client.post("/user/signin", {
+            "username": self.username,
+            "password": self.password
+        })
+        self.assertEqual(get_user(self.client).is_authenticated, True)
+
+        response = self.client.get("/user/account")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'users/account.html')
