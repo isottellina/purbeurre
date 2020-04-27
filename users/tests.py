@@ -3,7 +3,7 @@
 # Filename: tests.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 00:31:16 2020 (+0200)
-# Last-Updated: Tue Apr 28 01:00:47 2020 (+0200)
+# Last-Updated: Tue Apr 28 01:02:13 2020 (+0200)
 #           By: Louise <louise>
 # 
 from django.test import TransactionTestCase
@@ -18,6 +18,12 @@ class TestUserCreate(TransactionTestCase):
             password='password'
         )
 
+    def test_get(self):
+        response = self.client.get('/user/signup')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('users/signup.html')
+        
     def test_missing_data(self):
         response = self.client.post('/user/signup', {
             "first_name": "Hélène",
