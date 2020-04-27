@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Se connecter{% endblock %}
+{% block masttitle %}Se connecter{% endblock %}
+
+{% block content %}
+<section class="page-section" id="signup">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="mt-0 text-center">Connectez-vous !</h2>
+        <hr class="divider my-4" />
+	<div class="mb-5">
+	  <form class="container needs-validation" action="{% url 'users:signin' %}" method="post" novalidate>
+	    {% csrf_token %}
+	    <!-- Set up redirect if need there be-->
+	    {% if request.GET.next %}
+	    <input type="hidden" name="next" value="{{ request.GET.next }}" />
+	    {% elif request.POST.next %}
+	    {# We need this in case the user fails the first time #}
+	    <input type="hidden" name="next" value="{{ request.POST.next }}" />
+	    {% endif %}
+	    <div class="row">
+	      <div class="form-group col-lg-6">
+		<label class="border-bottom" for="usernameInput">Nom d'utilisateur *</label>
+		<input class="form-control" name="username" id="usernameInput" required>
+		<div class="invalid-feedback">
+		  Un nom d'utilisateur est requis.
+		</div>
+	      </div>
+	      <div class="form-group col-lg-6">
+		<label class="border-bottom" for="passwordInput">Mot de passe *</label>
+		<input type="password" class="form-control" name="password" id="passwordInput" required>
+		<div class="invalid-feedback">
+		  Un mot de passe est requis.
+		</div>
+	      </div>
+	    </div>
+	    <div class="row">
+	      <div class="form-group col-lg-12">
+		<button type="submit" class="btn btn-primary btn-block">Valider</button>
+	      </div>
+	    </div>
+	  </form>
+	</div>
+      </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'users/js/signup_validate.js' %}"></script>
+{% endblock %}

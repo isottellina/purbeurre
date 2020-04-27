@@ -3,14 +3,15 @@
 # Filename: views.py
 # Author: Louise <louise>
 # Created: Mon Apr 27 14:00:21 2020 (+0200)
-# Last-Updated: Mon Apr 27 21:35:19 2020 (+0200)
+# Last-Updated: Mon Apr 27 23:48:14 2020 (+0200)
 #           By: Louise <louise>
 #
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
-from django.contrib.auth import login
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 from .forms import UserForm
 
@@ -22,7 +23,16 @@ def signup(request):
         return render(request, "users/signup.html")
     elif request.method == "POST":
         user_form = UserForm(request.POST)
+        
         if user_form.is_valid():
+            user_already_exists = User.objects.filter(
+                username=user_form.cleaned_data['username']
+            ).exists()
+            
+            if user_already_exists:
+                # If the user already exists, fail.
+                return render(request, "users/signup.html")
+            
             user = User.objects.create(
                 username=user_form.cleaned_data['username'],
                 first_name=user_form.cleaned_data['first_name'],
@@ -36,3 +46,36 @@ def signup(request):
             return HttpResponseRedirect(reverse('home:index'))
         else:
             return render(request, "users/signup.html")
+
+def signin(request):
+    if request.method == "GET":
+        return render(request, "users/signin.html")
+    elif request.method == "POST":
+        # Since we only have to test if the fields are present
+        # we don't need a Form.
+        try:
+            user = authenticate(
+                username=request.POST['username'],
+                password=request.POST['password']
+            )
+
+            if user is not None:
+                login(request, user)
+                if request.POST['next']:
+                    return HttpResponseRedirect(request.POST['next'])
+                else:
+                    return HttpResponseRedirect(reverse('home:index'))
+            error_message = "Nom d'utilisateur ou mot de passe incorrect"
+        except KeyError: # a field was missing
+            error_message = "Un des deux champs était vide"
+        return render(request, "users/signin.html", {
+            "error_message": error_message
+        })
+        
+def signout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('home:index'))
+
+@login_required(login_url='/user/signin')
+def account(request):
+    return render(request, "users/account.html")

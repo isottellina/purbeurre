@@ -17,7 +17,7 @@
 	{% if request.user.is_authenticated %}
 	<!-- My account-->
         <li class="nav-item">
-	  <a class="nav-link" href="#" title="Mon compte">
+	  <a class="nav-link" href="{% url 'users:account' %}" title="Mon compte">
 	    <i class="fas fa-fw fa-user"></i>
 	    <span class="d-lg-none">Mon compte</span>
 	  </a>
@@ -34,7 +34,7 @@
 	</li>
 	<!-- Log out-->
 	<li class="nav-item">
-	  <a class="nav-link" href="#" title="Se déconnecter">
+	  <a class="nav-link" href="{% url 'users:signout' %}" title="Se déconnecter">
 	    <i class="fas fa-fw fa-sign-out-alt"></i>
 	    <span class="d-lg-none">Se déconnecter</span>
 	  </a>
@@ -49,7 +49,7 @@
 	</li>
 	<!-- Log in-->
 	<li class="nav-item">
-	  <a class="nav-link" href="#" title="Se connecter">
+	  <a class="nav-link" href="{% url 'users:signin' %}" title="Se connecter">
 	    <i class="fas fa-fw fa-sign-in-alt"></i>
 	    <span class="d-lg-none">Se connecter</span>
 	  </a>

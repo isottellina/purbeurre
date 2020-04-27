@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Mon compte{% endblock %}
+{% block masttitle %}{{ request.user.first_name }}{% endblock %}
+
+{% block content %}
+<section class="page-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="mt-0 text-center">Informations du compte</h2>
+        <hr class="divider my-4" />
+	<div class="mb-5">
+	  <ul>
+	    <li>Adresse mail : {{ request.user.email }}</li>
+	  </ul>
+	</div>
+      </div>
+    </div>
+</section>
+{% endblock %}
