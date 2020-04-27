@@ -3,7 +3,7 @@
 # Filename: views.py
 # Author: Louise <louise>
 # Created: Mon Apr 27 14:00:21 2020 (+0200)
-# Last-Updated: Tue Apr 28 00:59:46 2020 (+0200)
+# Last-Updated: Tue Apr 28 01:32:31 2020 (+0200)
 #           By: Louise <louise>
 #
 from django.http import HttpResponse, HttpResponseRedirect
@@ -35,7 +35,7 @@ def signup(request):
                               "users/signup.html",
                               status=409)
             
-            user = User.objects.create(
+            user = User.objects.create_user(
                 username=user_form.cleaned_data['username'],
                 first_name=user_form.cleaned_data['first_name'],
                 last_name=user_form.cleaned_data.get('last_name'),
@@ -64,16 +64,20 @@ def signin(request):
 
             if user is not None:
                 login(request, user)
-                if request.POST['next']:
+                if "next" in request.POST:
                     return HttpResponseRedirect(request.POST['next'])
                 else:
                     return HttpResponseRedirect(reverse('home:index'))
             error_message = "Nom d'utilisateur ou mot de passe incorrect"
         except KeyError: # a field was missing
             error_message = "Un des deux champs était vide"
-        return render(request, "users/signin.html", {
-            "error_message": error_message
-        })
+        return render(request,
+                      "users/signin.html",
+                      {
+                          "error_message": error_message
+                      },
+                      status=400
+        )
         
 def signout(request):
     logout(request)
