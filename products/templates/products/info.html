@@ -15,7 +15,37 @@
 	  <div class="row justify-content-center">
 	    <div class="col-lg-6 text-center">
 	      <h3>Nutriscore</h3>
-	      {{ product.nutriscore }}
+	      <div class="container">
+		<div class="row justify-content-center">
+		  <ul class="list-group list-group-horizontal align-items-center">
+		    <li class="list-group-item list-group-item-success">
+		      {% if product.nutriscore == 'a' %}<span class="selected-nutriscore">A</span>
+		      {% else %}A
+		      {% endif %}
+		    </li>
+		    <li class="list-group-item list-group-item-info">
+		      {% if product.nutriscore == 'b' %}<span class="selected-nutriscore">B</span>
+		      {% else %}B
+		      {% endif %}
+		    </li>
+		    <li class="list-group-item list-group-item-warning">
+		      {% if product.nutriscore == 'c' %}<span class="selected-nutriscore">C</span>
+		      {% else %}C
+		      {% endif %}
+		    </li>
+		    <li class="list-group-item list-group-item-primary">
+		      {% if product.nutriscore == 'd' %}<span class="selected-nutriscore">D</span>
+		      {% else %}D
+		      {% endif %}
+		    </li>
+		    <li class="list-group-item list-group-item-danger">
+		      {% if product.nutriscore == 'e' %}<span class="selected-nutriscore">E</span>
+		      {% else %}E
+		      {% endif %}
+		    </li>
+		  </ul>
+		</div>
+	      </div>
 	    </div>
 	    <div class="col-lg-6 text-center">
 	      <h3>Repères nutritionnels pour 100g</h3>
