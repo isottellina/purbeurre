@@ -3,7 +3,7 @@
 # Filename: populate_db.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 02:32:46 2020 (+0200)
-# Last-Updated: Tue Apr 28 03:32:57 2020 (+0200)
+# Last-Updated: Tue Apr 28 19:38:19 2020 (+0200)
 #           By: Louise <louise>
 #
 import requests
@@ -73,7 +73,6 @@ class Command(BaseCommand):
         This function returns a list of `number` products
         from `category` category.
         """
-        category_obj = Category.objects.get(name=category['name'])
         category_products = []
 
         for page_nb in range(1, (category["products"] // 20) + 2):
@@ -81,21 +80,20 @@ class Command(BaseCommand):
             category_page = requests.get(category_url).json()
 
             category_products += [
-                Product(
-                    name=product["product_name"],
-                    url=product["url"],
-                    image=product["image_url"],
-                    nutriscore=product["nutrition_grade_fr"],
-                    category=category_obj,
+                {
+                    'name': product["product_name"],
+                    'url': product["url"],
+                    'image': product["image_url"],
+                    'nutriscore': product["nutrition_grade_fr"],
 
                     # Nutriments
-                    energy=product.get('nutriments', {}).get('energy_100g'),
-                    proteins=product.get('nutriments', {}).get('proteins_100g'),
-                    fat=product.get('nutriments', {}).get('fat_100g'),
-                    saturated_fat=product.get('nutriments', {}).get('saturated-fat_100g'),
-                    sugar=product.get('nutriments', {}).get('sugars_100g'),
-                    salt=product.get('nutriments', {}).get('salt_100g')
-                )
+                    'energy': product.get('nutriments', {}).get('energy_100g'),
+                    'proteins': product.get('nutriments', {}).get('proteins_100g'),
+                    'fat': product.get('nutriments', {}).get('fat_100g'),
+                    'saturated_fat': product.get('nutriments', {}).get('saturated-fat_100g'),
+                    'sugar': product.get('nutriments', {}).get('sugars_100g'),
+                    'salt': product.get('nutriments', {}).get('salt_100g')
+                }
                 for product in category_page["products"]
                 # We have no business with products that don't have a nutriscore
                 # or even a product name, why are there products out there without
@@ -112,14 +110,38 @@ class Command(BaseCommand):
             if len(category_products) >= number:
                 break
 
-        return category_products[:number]
+        return {
+            "category_name": category['name'],
+            "products": category_products[:number]
+        }
     
     def save_products(self, products):
         """
         Same as with save_categories, this function saves
-        really quickly a lot of products to DB.
+        really quickly a lot of products to DB. The format
+        used is the same that scrape_product produces.
         """
-        Product.objects.bulk_create(products)
+        category = Category.objects.get(name=products["category_name"])
+        product_models = [
+            Product(
+                name=product['name'],
+                url=product['url'],
+                image=product['image'],
+                nutriscore=product['nutriscore'],
+                
+                category=category,
+
+                energy=product['energy'],
+                proteins=product['proteins'],
+                fat=product['fat'],
+                saturated_fat=product['saturated_fat'],
+                sugar=product['sugar'],
+                salt=product['salt']
+            )
+            for product in products['products']
+        ]
+        
+        Product.objects.bulk_create(product_models)
         
     def handle(self, **options):
         self.options = options
