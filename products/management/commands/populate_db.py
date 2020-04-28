@@ -3,7 +3,7 @@
 # Filename: populate_db.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 02:32:46 2020 (+0200)
-# Last-Updated: Tue Apr 28 03:27:01 2020 (+0200)
+# Last-Updated: Tue Apr 28 03:32:57 2020 (+0200)
 #           By: Louise <louise>
 #
 import requests
@@ -76,7 +76,6 @@ class Command(BaseCommand):
         category_obj = Category.objects.get(name=category['name'])
         category_products = []
 
-        print(category['name'])
         for page_nb in range(1, (category["products"] // 20) + 2):
             category_url = "{}/{}.json".format(category["url"], page_nb)
             category_page = requests.get(category_url).json()
