@@ -12,7 +12,35 @@
         <h2 class="mt-0 text-center">{{ product.name }}</h2>
         <hr class="divider my-4" />
 	<div class="mb-5 container">
-	  {{ product.name }}
+	  <div class="row justify-content-center">
+	    <div class="col-lg-6 text-center">
+	      <h3>Nutriscore</h3>
+	      {{ product.nutriscore }}
+	    </div>
+	    <div class="col-lg-6 text-center">
+	      <h3>Repères nutritionnels pour 100g</h3>
+	      <ul class="list-unstyled">
+		{% if product.energy %}
+		<li>Énergie : {{ product.energy|floatformat:"-2" }} kJ</li>
+		{% endif %}
+		{% if product.proteins %}
+		<li>Protéines : {{ product.proteins|floatformat:"-2" }} g</li>
+		{% endif %}
+		{% if product.fat %}
+		<li>Graisses : {{ product.fat|floatformat:"-2" }} g</li>
+		{% endif %}
+		{% if product.saturated_fat %}
+		<li>Dont saturées : {{ product.saturated_fat|floatformat:"-2" }} g</li>
+		{% endif %}
+		{% if product.sugar %}
+		<li>Sucres : {{ product.sugar|floatformat:"-2" }} g</li>
+		{% endif %}
+		{% if product.salt %}
+		<li>Sel : {{ product.salt|floatformat:"-2" }} g</li>
+		{% endif %}
+	      </ul>
+	    </div>
+	  </div>
 	</div>
       </div>
   </div>
