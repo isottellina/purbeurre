@@ -3,7 +3,7 @@
 # Filename: models.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 01:56:27 2020 (+0200)
-# Last-Updated: Tue Apr 28 03:06:56 2020 (+0200)
+# Last-Updated: Tue Apr 28 03:29:30 2020 (+0200)
 #           By: Louise <louise>
 #
 from django.db import models
@@ -18,7 +18,7 @@ class Product(models.Model):
     image = models.URLField(max_length=368)
     nutriscore = models.CharField(max_length=1)
 
-    energy = models.DecimalField(max_digits=7,
+    energy = models.DecimalField(max_digits=9,
                                  decimal_places=4,
                                  null=True)
     proteins = models.DecimalField(max_digits=7,
