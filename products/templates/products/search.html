@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Recherche{% endblock %}
+{% block masttitle %}Recherche{% endblock %}
+
+{% block content %}
+<section class="page-section" id="results">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="mt-0 text-center">Cherchez un produit !</h2>
+        <hr class="divider my-4" />
+	<div class="mb-5 container">
+	  
+	  <form class="container needs-validation" action="{% url 'products:search' %}" method="get" novalidate>
+	    <div class="row">
+	      <div class="form-group col-lg-12">
+		<label class="border-bottom" for="searchInput">Votre recherche ?</label>
+		<input class="form-control" name="query" id="searchInput" required>
+		<div class="invalid-feedback">
+		  Ce champ ne peut pas être vide.
+		</div>
+	      </div>
+	    </div>
+	    <div class="row">
+	      <div class="form-group col-lg-12">
+		<button type="submit" class="btn btn-primary btn-block">Valider</button>
+	      </div>
+	    </div>
+	  </form>
+	</div>
+      </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'users/js/signup_validate.js' %}"></script>
+{% endblock %}

@@ -7,9 +7,9 @@
       </div>
       <div class="col-lg-8 align-self-baseline">
         <p class="text-white-75 font-weight-light mb-5">Trouvez un produit de substitution pour ceux que vous consommez tous les jours</p>
-	<form class="form-inline justify-content-center">
+	<form class="form-inline justify-content-center" action="{% url 'products:search' %}">
 	  <div class="input-group">
-	    <input class="form-control" type="search" placeholder="Produit" aria-label="Chercher">
+	    <input class="form-control" type="search" name="query" placeholder="Produit" aria-label="Chercher">
 	    <div class="input-group-append">
 	      <button class="btn btn-dark" type="submit">Chercher</button>
 	    </div>
