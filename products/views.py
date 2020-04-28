@@ -3,11 +3,10 @@
 # Filename: views.py
 # Author: Louise <louise>
 # Created: Sun Apr 26 19:58:05 2020 (+0200)
-# Last-Updated: Tue Apr 28 20:13:49 2020 (+0200)
+# Last-Updated: Tue Apr 28 23:40:02 2020 (+0200)
 #           By: Louise <louise>
 # 
-from django.shortcuts import render
-
+from django.shortcuts import render, get_object_or_404
 from .models import Product
 
 def search(request):
@@ -22,8 +21,16 @@ def search(request):
         return render(request, "products/search.html")
     
     results = Product.objects.filter(name__icontains=request.GET['query'])
+    print(results)
     
     return render(request, "products/search_results.html", {
         'search_str': request.GET['query'],
         'results': results
+    })
+
+def info(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    
+    return render(request, "products/info.html", {
+        'product': product
     })

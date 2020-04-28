@@ -3,7 +3,7 @@
 # Filename: dev.py
 # Author: Louise <louise>
 # Created: Sun Apr 26 13:40:52 2020 (+0200)
-# Last-Updated: Sun Apr 26 20:07:48 2020 (+0200)
+# Last-Updated: Tue Apr 28 23:43:54 2020 (+0200)
 #           By: Louise <louise>
 # 
 from .base import *
@@ -13,6 +13,7 @@ SECRET_KEY = '*6)v3&!@3$l9@evn*+*ec-&2o3s#fbfh&p@2fxiw3k626)q=nl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
