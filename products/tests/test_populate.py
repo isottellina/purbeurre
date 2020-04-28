@@ -3,12 +3,12 @@
 # Filename: test_populate.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 17:18:57 2020 (+0200)
-# Last-Updated: Tue Apr 28 19:42:52 2020 (+0200)
+# Last-Updated: Wed Apr 29 00:49:07 2020 (+0200)
 #           By: Louise <louise>
 #
 import json
 from pathlib import Path
-from django.test import TransactionTestCase
+from django.test import TestCase
 from django.core import management
 from unittest.mock import patch
 
@@ -30,7 +30,7 @@ class DummyResponse():
         with open(self.filename) as file:
             return json.load(file)
 
-class TestScrape(TransactionTestCase):
+class TestScrape(TestCase):
     def setUp(self):
         pass
 
@@ -87,13 +87,10 @@ class TestScrape(TransactionTestCase):
             "https://fr.openfoodfacts.org/categorie/saucissons/1.json"
         )
 
-class TestClean(TransactionTestCase):
-    def setUp(self):
-        management.call_command("loaddata",
-                                (Path(__loader__.path).parent /
-                                 "samples" /
-                                 "sample_data.json"),
-                                verbosity=0)
+class TestClean(TestCase):
+    fixtures = [Path(__loader__.path).parent /
+                "samples" /
+                "sample_data.json"]
 
     def test_clean_database(self):
         # Check that there is indeed 2 categories and 10 products
@@ -108,7 +105,7 @@ class TestClean(TransactionTestCase):
         self.assertEqual(Category.objects.all().count(), 0)
         self.assertEqual(Product.objects.all().count(), 0)
 
-class TestCommand(TransactionTestCase):
+class TestCommand(TestCase):
     @patch('products.management.commands.populate_db.Command.scrape_categories')
     @patch('products.management.commands.populate_db.Command.scrape_products')
     def test_handle(self, mock_products, mock_categories):

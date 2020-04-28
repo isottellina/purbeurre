@@ -3,16 +3,16 @@
 # Filename: tests.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 00:31:16 2020 (+0200)
-# Last-Updated: Tue Apr 28 01:52:23 2020 (+0200)
+# Last-Updated: Wed Apr 29 00:49:43 2020 (+0200)
 #           By: Louise <louise>
 #
-from django.test import TransactionTestCase
+from django.test import TestCase
 from django.contrib.auth import get_user
 from django.contrib.auth.models import User
 
 from .views import signout as signout_view
 
-class TestUserCreate(TransactionTestCase):
+class TestUserCreate(TestCase):
     def setUp(self):
         User.objects.create_user(
             username='user1',
@@ -85,7 +85,7 @@ class TestUserCreate(TransactionTestCase):
             True
         )
 
-class TestUserLogin(TransactionTestCase):
+class TestUserLogin(TestCase):
     def setUp(self):
         self.username = 'user1'
         self.password = 'password'
@@ -141,7 +141,7 @@ class TestUserLogin(TransactionTestCase):
         self.assertRedirects(response, '/user/account')
         self.assertEqual(get_user(self.client).is_authenticated, True)
 
-class TestUserLogout(TransactionTestCase):
+class TestUserLogout(TestCase):
     def setUp(self):
         self.username = 'user1'
         self.password = 'password'
@@ -167,7 +167,7 @@ class TestUserLogout(TransactionTestCase):
         self.assertRedirects(response, '/')
         self.assertEqual(get_user(self.client).is_authenticated, False)
 
-class TestUserAccount(TransactionTestCase):
+class TestUserAccount(TestCase):
     def setUp(self):
         self.username = 'user1'
         self.password = 'password'
