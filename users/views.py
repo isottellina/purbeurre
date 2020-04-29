@@ -3,12 +3,11 @@
 # Filename: views.py
 # Author: Louise <louise>
 # Created: Mon Apr 27 14:00:21 2020 (+0200)
-# Last-Updated: Tue Apr 28 01:35:48 2020 (+0200)
+# Last-Updated: Wed Apr 29 16:46:01 2020 (+0200)
 #           By: Louise <louise>
 #
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -45,7 +44,7 @@ def signup(request):
 
             user.save()
             login(request, user)
-            return HttpResponseRedirect(reverse('home:index'))
+            return redirect('home:index')
         else:
             # Return a HTTP 400 Bad Request code
             return render(request, "users/signup.html", status=400)
@@ -65,9 +64,9 @@ def signin(request):
             if user is not None:
                 login(request, user)
                 if "next" in request.POST:
-                    return HttpResponseRedirect(request.POST['next'])
+                    return redirect(request.POST['next'])
                 else:
-                    return HttpResponseRedirect(reverse('home:index'))
+                    return redirect('home:index')
             error_message = "Nom d'utilisateur ou mot de passe incorrect"
         except KeyError: # a field was missing
             error_message = "Un des deux champs était vide"
@@ -81,7 +80,7 @@ def signin(request):
         
 def signout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('home:index'))
+    return redirect('home:index')
 
 @login_required(login_url='/user/signin')
 def account(request):
