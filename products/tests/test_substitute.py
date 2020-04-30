@@ -1,11 +1,11 @@
-# test_substitute.py --- 
-# 
+# test_substitute.py ---
+#
 # Filename: test_substitute.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 20:16:54 2020 (+0200)
 # Last-Updated: Thu Apr 30 21:44:03 2020 (+0200)
 #           By: Louise <louise>
-# 
+#
 from pathlib import Path
 from django.test import TestCase
 

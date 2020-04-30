@@ -1,11 +1,11 @@
-# test_info.py --- 
-# 
+# test_info.py ---
+#
 # Filename: test_info.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 20:22:57 2020 (+0200)
 # Last-Updated: Thu Apr 30 21:43:22 2020 (+0200)
 #           By: Louise <louise>
-# 
+#
 from pathlib import Path
 from django.test import TestCase
 

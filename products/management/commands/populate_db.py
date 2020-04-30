@@ -1,16 +1,24 @@
-# populate_db.py --- 
-# 
+# populate_db.py ---
+#
 # Filename: populate_db.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 02:32:46 2020 (+0200)
-# Last-Updated: Tue Apr 28 19:38:19 2020 (+0200)
+# Last-Updated: Fri May  1 00:43:11 2020 (+0200)
 #           By: Louise <louise>
 #
+"""
+This defines a command to be added to manage.py.
+"""
 import requests
-from products.models import Category, Product
 from django.core.management import BaseCommand
 
+from products.models import Category, Product
+
 class Command(BaseCommand):
+    """
+    This command populates the database with data from the
+    OpenFoodFacts API.
+    """
     help = "Populates the database by polling from the OpenFoodFacts API"
 
     def add_arguments(self, parser):
@@ -37,7 +45,7 @@ class Command(BaseCommand):
         should follow.
         """
         Category.objects.all().delete()
-        
+
     def scrape_categories(self, number):
         """
         This function returns a list of `number` categories
@@ -54,7 +62,7 @@ class Command(BaseCommand):
         categories = [i for i in req.json()["tags"]
                       if self.ccode + ':' in i["id"] and i["products"] > 1]
         categories = categories[:number] # We limit the number to the one given
-        
+
         return categories
 
     def save_categories(self, categories):
@@ -114,7 +122,7 @@ class Command(BaseCommand):
             "category_name": category['name'],
             "products": category_products[:number]
         }
-    
+
     def save_products(self, products):
         """
         Same as with save_categories, this function saves
@@ -128,7 +136,7 @@ class Command(BaseCommand):
                 url=product['url'],
                 image=product['image'],
                 nutriscore=product['nutriscore'],
-                
+
                 category=category,
 
                 energy=product['energy'],
@@ -140,9 +148,9 @@ class Command(BaseCommand):
             )
             for product in products['products']
         ]
-        
+
         Product.objects.bulk_create(product_models)
-        
+
     def handle(self, **options):
         self.options = options
         self.ccode = options['ccode']
@@ -153,7 +161,7 @@ class Command(BaseCommand):
 
         # Clean database first
         self.clean_database()
-        
+
         categories = self.scrape_categories(options['categories'])
         self.save_categories(categories)
 

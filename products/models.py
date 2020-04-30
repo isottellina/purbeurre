@@ -1,18 +1,29 @@
-# models.py --- 
-# 
+# models.py ---
+#
 # Filename: models.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 01:56:27 2020 (+0200)
-# Last-Updated: Thu Apr 30 22:54:56 2020 (+0200)
+# Last-Updated: Fri May  1 00:38:50 2020 (+0200)
 #           By: Louise <louise>
 #
+"""
+The models of the products app.
+"""
 from django.db import models
-from django.contrib.auth.models import User
 
 class Category(models.Model):
+    """
+    This is a category. It has a one-to-many relationship
+    with Product.
+    """
     name = models.CharField(max_length=100)
 
 class Product(models.Model):
+    """
+    This is a product. It contains every information we
+    need for the system to function, and a bit more to
+    display them in the info page.
+    """
     name = models.CharField(max_length=255)
     url = models.URLField(max_length=368)
     image = models.URLField(max_length=368)
