@@ -3,7 +3,7 @@
 # Filename: test_save.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 21:39:37 2020 (+0200)
-# Last-Updated: Thu Apr 30 23:14:39 2020 (+0200)
+# Last-Updated: Thu Apr 30 23:36:34 2020 (+0200)
 #           By: Louise <louise>
 # 
 from pathlib import Path
@@ -37,7 +37,7 @@ class SaveTest(TestCase):
         """
         Tests that a GET request redirects to the home page.
         """
-        response = self.client.get("/product/save")
+        response = self.client.get("/user/save")
 
         self.assertRedirects(response, "/")
 
@@ -46,7 +46,7 @@ class SaveTest(TestCase):
         Tests that when the user is not logged in, a
         401 code is returned.
         """
-        request = self.factory.post("/product/save", {
+        request = self.factory.post("/user/save", {
             "orig_product": 1,
             "sub_product": 2
         })
@@ -60,7 +60,7 @@ class SaveTest(TestCase):
         Tests that if the fields are missing, a 400
         code is returned.
         """
-        request = self.factory.post("/product/save")
+        request = self.factory.post("/user/save")
         request.user = self.user
         response = views.save.save(request)
         
@@ -71,7 +71,7 @@ class SaveTest(TestCase):
         Tests that if a requested product doesn't exist,
         the view returns a 404 error.
         """
-        request = self.factory.post("/product/save", {
+        request = self.factory.post("/user/save", {
             "orig_product": 1,
             "sub_product": 5000
         })
@@ -85,7 +85,7 @@ class SaveTest(TestCase):
         Tests that the product is saved without error
         when all parameters are good.
         """
-        request = self.factory.post("/product/save", {
+        request = self.factory.post("/user/save", {
             "orig_product": 1,
             "sub_product": 2
         })

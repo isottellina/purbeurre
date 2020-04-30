@@ -1,11 +1,11 @@
-# tests.py --- 
-# 
+# tests.py ---
+#
 # Filename: tests.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 00:19:58 2020 (+0200)
 # Last-Updated: Tue Apr 28 00:41:01 2020 (+0200)
 #           By: Louise <louise>
-# 
+#
 from django.test import SimpleTestCase
 
 class HomeTest(SimpleTestCase):
