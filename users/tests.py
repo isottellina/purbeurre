@@ -3,14 +3,14 @@
 # Filename: tests.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 00:31:16 2020 (+0200)
-# Last-Updated: Thu Apr 30 22:36:15 2020 (+0200)
+# Last-Updated: Thu Apr 30 22:46:12 2020 (+0200)
 #           By: Louise <louise>
 #
-from django.test import TestCase
+from django.test import TestCase, RequestFactory
 from django.contrib.auth import get_user
 from django.contrib.auth.models import User
 
-from .views import signout as signout_view
+from . import views
 
 class TestUserCreate(TestCase):
     USER_USERNAME = "user1"
@@ -177,6 +177,7 @@ class TestUserAccount(TestCase):
     USER_PASSWORD = "password"
     
     def setUp(self):
+        self.factory = RequestFactory()
         self.user = User.objects.create_user(
             username=self.USER_USERNAME,
             first_name='Chantal',
@@ -190,13 +191,9 @@ class TestUserAccount(TestCase):
         self.assertRedirects(response, "/user/signin?next=/user/account")
 
     def test_success(self):
-        # Sign in first
-        signin_response = self.client.post("/user/signin", {
-            "username": self.USER_USERNAME,
-            "password": self.USER_PASSWORD
-        })
-        self.assertEqual(get_user(self.client).is_authenticated, True)
-
-        response = self.client.get("/user/account")
+        request = self.factory.get("/user/account")
+        request.user = self.user
+        response = views.account(request)
+        
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'users/account.html')
+        self.assertContains(response, "Chantal")
