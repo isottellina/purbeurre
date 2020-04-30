@@ -3,10 +3,10 @@
 # Filename: views.py
 # Author: Louise <louise>
 # Created: Sun Apr 26 19:58:05 2020 (+0200)
-# Last-Updated: Thu Apr 30 21:26:31 2020 (+0200)
+# Last-Updated: Thu Apr 30 22:10:05 2020 (+0200)
 #           By: Louise <louise>
 #
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product, SavedProduct
 
@@ -89,7 +89,7 @@ def save(request):
         sub_product = get_object_or_404(Product,
                                         id=request.POST['sub_product']
         )
-    except django.http.Http404:
+    except Http404:
         # If we couldn't get any of the products, error 404
         return JsonResponse(
             {

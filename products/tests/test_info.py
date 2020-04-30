@@ -3,7 +3,7 @@
 # Filename: test_info.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 20:22:57 2020 (+0200)
-# Last-Updated: Thu Apr 30 20:27:07 2020 (+0200)
+# Last-Updated: Thu Apr 30 21:43:22 2020 (+0200)
 #           By: Louise <louise>
 # 
 from pathlib import Path
@@ -31,4 +31,4 @@ class InfoTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "products/info.html")
-        self.assertContains(response, "Énergie : 1749 kJ")
+        self.assertContains(response, "Énergie : 1259 kJ")

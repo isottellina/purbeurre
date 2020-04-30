@@ -3,7 +3,7 @@
 # Filename: test_search.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 20:03:01 2020 (+0200)
-# Last-Updated: Thu Apr 30 20:15:27 2020 (+0200)
+# Last-Updated: Thu Apr 30 21:44:52 2020 (+0200)
 #           By: Louise <louise>
 #
 from pathlib import Path
@@ -50,4 +50,4 @@ class SearchTest(TestCase):
         # that a test product is really on the page.
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'products/search_results.html')
-        self.assertContains(response, "Saucisson sec pur porc label rouge")
+        self.assertContains(response, "Saucisson sec Label rouge")

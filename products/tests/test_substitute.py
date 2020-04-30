@@ -3,7 +3,7 @@
 # Filename: test_substitute.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 20:16:54 2020 (+0200)
-# Last-Updated: Thu Apr 30 20:23:42 2020 (+0200)
+# Last-Updated: Thu Apr 30 21:44:03 2020 (+0200)
 #           By: Louise <louise>
 # 
 from pathlib import Path
@@ -31,4 +31,4 @@ class SubstituteTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "products/substitute.html")
-        self.assertContains(response, "Saucisson sec pur porc label rouge")
+        self.assertContains(response, "saucisse sèche aux noisettes")
