@@ -3,13 +3,13 @@
 # Filename: helpers.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 23:56:01 2020 (+0200)
-# Last-Updated: Fri May  1 00:24:02 2020 (+0200)
+# Last-Updated: Fri May  1 00:28:17 2020 (+0200)
 #           By: Louise <louise>
 #
 """
 Defines helpers for the tests of the users app.
 """
-from django.test import TestCase, RequestFactory
+from django.test import TestCase
 from django.contrib.auth.models import User
 
 class UsersTestCase(TestCase):

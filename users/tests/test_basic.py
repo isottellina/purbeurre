@@ -3,7 +3,7 @@
 # Filename: tests.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 00:31:16 2020 (+0200)
-# Last-Updated: Fri May  1 00:26:40 2020 (+0200)
+# Last-Updated: Fri May  1 00:27:56 2020 (+0200)
 #           By: Louise <louise>
 #
 """
@@ -13,7 +13,6 @@ from django.contrib.auth import get_user
 from django.contrib.auth.models import User
 
 from .helpers import UsersTestCase
-from .. import views
 
 class TestUserCreate(UsersTestCase):
     """

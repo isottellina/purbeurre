@@ -3,19 +3,17 @@
 # Filename: test_save.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 21:39:37 2020 (+0200)
-# Last-Updated: Fri May  1 00:25:19 2020 (+0200)
+# Last-Updated: Fri May  1 00:28:03 2020 (+0200)
 #           By: Louise <louise>
 #
 """
 Tests the views of the users app related to the saving feature.
 """
 from pathlib import Path
-from django.contrib.auth.models import AnonymousUser
 
 from products.models import Product
 
 from .helpers import UsersTestCase
-from .. import views
 from ..models import SavedProduct
 
 class SaveTest(UsersTestCase):
