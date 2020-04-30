@@ -3,7 +3,7 @@
 # Filename: dev.py
 # Author: Louise <louise>
 # Created: Sun Apr 26 13:40:52 2020 (+0200)
-# Last-Updated: Thu Apr 30 19:30:16 2020 (+0200)
+# Last-Updated: Fri May  1 01:22:10 2020 (+0200)
 #           By: Louise <louise>
 # 
 from .base import *
@@ -24,6 +24,3 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
-# Static files
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')

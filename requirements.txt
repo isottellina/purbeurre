@@ -2,3 +2,6 @@ django==3.0.5
 django-compressor==2.4
 django-libsass==0.8
 requests==2.23.0
+
+gunicorn==20.0.4
+whitenoise==5.0.1
