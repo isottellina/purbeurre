@@ -3,7 +3,7 @@
 # Filename: tests.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 00:31:16 2020 (+0200)
-# Last-Updated: Fri May  1 00:00:18 2020 (+0200)
+# Last-Updated: Fri May  1 00:26:40 2020 (+0200)
 #           By: Louise <louise>
 #
 """
@@ -181,13 +181,13 @@ class TestUserLogout(UsersTestCase):
     """
     def test_signout(self):
         """
-        Tests the log out per se. This doesn't work with
-        a RequestFactory.
+        Tests the log out per se.
         """
-        signin_response = self.client.post("/user/signin", {
-            "username": self.USER_USERNAME,
-            "password": self.USER_PASSWORD
-        })
+        # First log-in.
+        self.client.login(
+            username=self.USER_USERNAME,
+            password=self.USER_PASSWORD
+        )
         self.assertEqual(get_user(self.client).is_authenticated, True)
 
         # Then logout and check if it worked
@@ -213,9 +213,11 @@ class TestUserAccount(UsersTestCase):
         If we're logged in, we should get to the account
         page and it should be our own.
         """
-        request = self.factory.get("/user/account")
-        request.user = self.user
-        response = views.basic.account(request)
+        self.client.login(
+            username=self.USER_USERNAME,
+            password=self.USER_PASSWORD
+        )
+        response = self.client.get("/user/account")
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Chantal")

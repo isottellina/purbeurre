@@ -3,11 +3,16 @@
 # Filename: test_save.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 21:39:37 2020 (+0200)
-# Last-Updated: Fri May  1 00:00:49 2020 (+0200)
+# Last-Updated: Fri May  1 00:25:19 2020 (+0200)
 #           By: Louise <louise>
 #
+"""
+Tests the views of the users app related to the saving feature.
+"""
 from pathlib import Path
-from django.contrib.auth.models import AnonymousUser, User
+from django.contrib.auth.models import AnonymousUser
+
+from products.models import Product
 
 from .helpers import UsersTestCase
 from .. import views
@@ -34,12 +39,10 @@ class SaveTest(UsersTestCase):
         Tests that when the user is not logged in, a
         401 code is returned.
         """
-        request = self.factory.post("/user/save", {
+        response = self.client.post("/user/save", {
             "orig_product": 1,
             "sub_product": 2
         })
-        request.user = AnonymousUser()
-        response = views.save.save(request)
 
         self.assertEqual(response.status_code, 401)
 
@@ -48,9 +51,11 @@ class SaveTest(UsersTestCase):
         Tests that if the fields are missing, a 400
         code is returned.
         """
-        request = self.factory.post("/user/save")
-        request.user = self.user
-        response = views.save.save(request)
+        self.client.login(
+            username=self.USER_USERNAME,
+            password=self.USER_PASSWORD
+        )
+        response = self.client.post("/user/save")
 
         self.assertEqual(response.status_code, 400)
 
@@ -59,12 +64,14 @@ class SaveTest(UsersTestCase):
         Tests that if a requested product doesn't exist,
         the view returns a 404 error.
         """
-        request = self.factory.post("/user/save", {
+        self.client.login(
+            username=self.USER_USERNAME,
+            password=self.USER_PASSWORD
+        )
+        response = self.client.post("/user/save", {
             "orig_product": 1,
             "sub_product": 5000
         })
-        request.user = self.user
-        response = views.save.save(request)
 
         self.assertEqual(response.status_code, 404)
 
@@ -73,12 +80,14 @@ class SaveTest(UsersTestCase):
         Tests that the product is saved without error
         when all parameters are good.
         """
-        request = self.factory.post("/user/save", {
+        self.client.login(
+            username=self.USER_USERNAME,
+            password=self.USER_PASSWORD
+        )
+        response = self.client.post("/user/save", {
             "orig_product": 1,
             "sub_product": 2
         })
-        request.user = self.user
-        response = views.save.save(request)
 
         self.assertEqual(response.status_code, 200)
 
@@ -91,4 +100,36 @@ class SaveTest(UsersTestCase):
         self.assertEqual(savedproduct.sub_product.id, 2)
 
 class TestShowSaved(UsersTestCase):
-    pass
+    """
+    Tests the page that shows the products you saved.
+    """
+    # We load the fixture from products here too
+    fixtures = [Path(__loader__.path).parent.parent.parent /
+                "products" /
+                "tests" /
+                "samples" /
+                "sample_data.json"]
+
+    def setUp(self):
+        """
+        Calls the set-up function and then adds a saved product
+        to test.
+        """
+        super(TestShowSaved, self).setUp()
+
+        orig_product = Product.objects.get(id=1)
+        sub_product = Product.objects.get(id=2)
+        self.savedproduct = SavedProduct.objects.create(
+            orig_product=orig_product,
+            sub_product=sub_product,
+            user=self.user
+        )
+
+    def test_not_logged_in(self):
+        """
+        Tests that when the user is not logged in, we
+        are redirected to the sign-in page.
+        """
+        response = self.client.get("/user/saved")
+
+        self.assertRedirects(response, "/user/signin?next=/user/saved")
