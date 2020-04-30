@@ -1,11 +1,16 @@
-# urls.py --- 
-# 
+# urls.py ---
+#
 # Filename: urls.py
 # Author: Louise <louise>
 # Created: Mon Apr 27 14:28:50 2020 (+0200)
-# Last-Updated: Thu Apr 30 23:16:39 2020 (+0200)
+# Last-Updated: Thu Apr 30 23:45:52 2020 (+0200)
 #           By: Louise <louise>
-# 
+#
+"""
+The URLs of the users app. They are divided in two groups,
+basic views, that do thinks like sign-in, sign-out, and
+save views, which are related to the save feature.
+"""
 from django.urls import path
 
 from .views import basic, save

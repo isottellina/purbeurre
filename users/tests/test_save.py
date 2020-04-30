@@ -1,22 +1,19 @@
-# test_save.py --- 
-# 
+# test_save.py ---
+#
 # Filename: test_save.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 21:39:37 2020 (+0200)
-# Last-Updated: Thu Apr 30 23:36:34 2020 (+0200)
+# Last-Updated: Fri May  1 00:00:49 2020 (+0200)
 #           By: Louise <louise>
-# 
+#
 from pathlib import Path
-from django.test import RequestFactory, TestCase
 from django.contrib.auth.models import AnonymousUser, User
 
+from .helpers import UsersTestCase
 from .. import views
 from ..models import SavedProduct
 
-class SaveTest(TestCase):
-    USER_USERNAME = "user1"
-    USER_PASSWORD = "password"
-
+class SaveTest(UsersTestCase):
     # We load the fixture from products
     fixtures = [Path(__loader__.path).parent.parent.parent /
                 "products" /
@@ -24,15 +21,6 @@ class SaveTest(TestCase):
                 "samples" /
                 "sample_data.json"]
 
-    def setUp(self):
-        self.factory = RequestFactory()
-        self.user = User.objects.create_user(
-            username=self.USER_USERNAME,
-            first_name="Chantal",
-            email="chantal@beauregard.com",
-            password=self.USER_PASSWORD
-        )
-    
     def test_get_method(self):
         """
         Tests that a GET request redirects to the home page.
@@ -63,7 +51,7 @@ class SaveTest(TestCase):
         request = self.factory.post("/user/save")
         request.user = self.user
         response = views.save.save(request)
-        
+
         self.assertEqual(response.status_code, 400)
 
     def test_products_dont_exist(self):
@@ -101,3 +89,6 @@ class SaveTest(TestCase):
         self.assertEqual(savedproduct.user, self.user)
         self.assertEqual(savedproduct.orig_product.id, 1)
         self.assertEqual(savedproduct.sub_product.id, 2)
+
+class TestShowSaved(UsersTestCase):
+    pass
