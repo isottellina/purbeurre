@@ -3,7 +3,7 @@
 # Filename: views.py
 # Author: Louise <louise>
 # Created: Sun Apr 26 19:58:05 2020 (+0200)
-# Last-Updated: Thu Apr 30 22:10:05 2020 (+0200)
+# Last-Updated: Thu Apr 30 22:17:55 2020 (+0200)
 #           By: Louise <louise>
 #
 from django.http import JsonResponse, Http404
@@ -113,3 +113,4 @@ def save(request):
             "error": "The product was successfully saved."
         }
     )
+

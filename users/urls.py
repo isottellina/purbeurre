@@ -3,7 +3,7 @@
 # Filename: urls.py
 # Author: Louise <louise>
 # Created: Mon Apr 27 14:28:50 2020 (+0200)
-# Last-Updated: Mon Apr 27 23:26:43 2020 (+0200)
+# Last-Updated: Thu Apr 30 22:19:12 2020 (+0200)
 #           By: Louise <louise>
 # 
 from django.urls import path
@@ -16,5 +16,6 @@ urlpatterns = [
     path('signin', views.signin, name='signin'),
     path('signout', views.signout, name='signout'),
 
-    path('account', views.account, name='account')
+    path('account', views.account, name='account'),
+    path('saved', views.show_saved, name='saved')
 ]

@@ -3,7 +3,7 @@
 # Filename: urls.py
 # Author: Louise <louise>
 # Created: Sun Apr 26 19:57:39 2020 (+0200)
-# Last-Updated: Thu Apr 30 21:06:14 2020 (+0200)
+# Last-Updated: Thu Apr 30 22:18:46 2020 (+0200)
 #           By: Louise <louise>
 # 
 from django.urls import path
