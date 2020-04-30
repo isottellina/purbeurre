@@ -3,7 +3,7 @@
 # Filename: views.py
 # Author: Louise <louise>
 # Created: Sun Apr 26 19:58:05 2020 (+0200)
-# Last-Updated: Thu Apr 30 19:51:46 2020 (+0200)
+# Last-Updated: Thu Apr 30 20:17:47 2020 (+0200)
 #           By: Louise <louise>
 # 
 from django.shortcuts import render, get_object_or_404
@@ -30,7 +30,6 @@ def search(request):
 def substitute(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     substitutes = product.category.products.order_by('nutriscore')[:24]
-    print(product.image)
     
     return render(request, "products/substitute.html", {
         'orig_product': product,
