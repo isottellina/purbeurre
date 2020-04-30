@@ -1,21 +1,22 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Recherche de '{{ search_str }}'{% endblock %}
-{% block masttitle %}Recherche de '{{ search_str }}'{% endblock %}
+{% block title %}Substituts pour {{ orig_product.name }}{% endblock %}
+{% block masttitle %}{{ orig_product.name }}{% endblock %}
+{% block maststyle %}style="background: linear-gradient(to bottom, rgba(196, 85, 37, 0.8) 0%, rgba(196, 85, 37, 0.8) 100%), url('{{ orig_product.image }}');"{% endblock %}
 
 {% block content %}
 <section class="page-section" id="results">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8">
-        <h2 class="mt-0 text-center">Résultats</h2>
+        <h2 class="mt-0 text-center">Vous pouvez remplacer cet aliment par :</h2>
         <hr class="divider my-4" />
 	<div class="container text-center">
 	  <div class="row">
-	    {% for product in results %}
+	    {% for product in substitutes %}
 	    <div class="col-lg-4 mb-4">
-	      <a href="{% url 'products:substitute' product.id %}">
+	      <a href="{% url 'products:info' product.id %}">
 		<div class="row justify-content-center">
 		  <div class="img-search-container">
 		    <img class="img-thumbnail img-search" src="{{ product.image }}" />
@@ -24,6 +25,9 @@
 		</div>
 		<div class="row justify-content-center">{{ product.name }}</div>
 	      </a>
+	      <div class="row justify-content-center align-items-center">
+		<i class="fas fa-fw fa-save"></i> Sauvegarder
+	      </div>
 	    </div>
 	    {% endfor %}
 	  </div>

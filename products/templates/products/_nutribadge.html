@@ -1,0 +1,11 @@
+{% if product.nutriscore == 'a' %}
+<div class="badge-pill badge-success nutriscore">{{ product.nutriscore }}</div>
+{% elif product.nutriscore == 'b' %}
+<div class="badge-pill badge-info nutriscore">{{ product.nutriscore }}</div>
+{% elif product.nutriscore == 'c' %}
+<div class="badge-pill badge-warning nutriscore">{{ product.nutriscore }}</div>
+{% elif product.nutriscore == 'd' %}
+<div class="badge-pill badge-primary nutriscore">{{ product.nutriscore }}</div>
+{% elif product.nutriscore == 'e' %}
+<div class="badge-pill badge-danger nutriscore">{{ product.nutriscore }}</div>
+{% endif %}

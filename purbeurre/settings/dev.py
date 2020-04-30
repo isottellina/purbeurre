@@ -3,7 +3,7 @@
 # Filename: dev.py
 # Author: Louise <louise>
 # Created: Sun Apr 26 13:40:52 2020 (+0200)
-# Last-Updated: Wed Apr 29 17:02:35 2020 (+0200)
+# Last-Updated: Thu Apr 30 19:30:16 2020 (+0200)
 #           By: Louise <louise>
 # 
 from .base import *
@@ -26,4 +26,4 @@ DATABASES = {
 }
 
 # Static files
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
