@@ -3,7 +3,7 @@
 # Filename: models.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 01:56:27 2020 (+0200)
-# Last-Updated: Tue Apr 28 03:29:30 2020 (+0200)
+# Last-Updated: Thu Apr 30 22:54:56 2020 (+0200)
 #           By: Louise <louise>
 #
 from django.db import models
@@ -40,14 +40,3 @@ class Product(models.Model):
     category = models.ForeignKey(Category,
                                  on_delete=models.CASCADE,
                                  related_name='products')
-
-class SavedProduct(models.Model):
-    original_product = models.ForeignKey(Product,
-                                         on_delete=models.CASCADE,
-                                         related_name='original_savedproducts')
-    replaced_product = models.ForeignKey(Product,
-                                         on_delete=models.CASCADE,
-                                         related_name='replaced_savedproducts')
-    user = models.ForeignKey(User,
-                             on_delete=models.CASCADE,
-                             related_name='saved_products')

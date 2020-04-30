@@ -4,7 +4,7 @@ function csrfSafeMethod(method) {
 }
 
 function saveProduct(orig_product, sub_product) {
-    $.post("/product/save", {
+    $.post("/user/save", {
 	"orig_product": orig_product,
 	"sub_product": sub_product
     });

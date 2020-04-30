@@ -3,14 +3,15 @@
 # Filename: tests.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 00:31:16 2020 (+0200)
-# Last-Updated: Thu Apr 30 22:46:12 2020 (+0200)
+# Last-Updated: Thu Apr 30 23:17:08 2020 (+0200)
 #           By: Louise <louise>
 #
 from django.test import TestCase, RequestFactory
 from django.contrib.auth import get_user
 from django.contrib.auth.models import User
 
-from . import views
+from .. import views
+from ..models import SavedProduct
 
 class TestUserCreate(TestCase):
     USER_USERNAME = "user1"
@@ -193,7 +194,20 @@ class TestUserAccount(TestCase):
     def test_success(self):
         request = self.factory.get("/user/account")
         request.user = self.user
-        response = views.account(request)
+        response = views.basic.account(request)
         
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Chantal")
+
+class TestShowSaved(TestCase):
+    USER_USERNAME = "user1"
+    USER_PASSWORD = "password"
+
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.user = User.objects.create_user(
+            username=self.USER_USERNAME,
+            first_name='Chantal',
+            email='chantal@beauregard.com',
+            password=self.USER_PASSWORD
+        )

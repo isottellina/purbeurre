@@ -3,7 +3,7 @@
 # Filename: test_save.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 21:39:37 2020 (+0200)
-# Last-Updated: Thu Apr 30 22:32:13 2020 (+0200)
+# Last-Updated: Thu Apr 30 23:14:39 2020 (+0200)
 #           By: Louise <louise>
 # 
 from pathlib import Path
@@ -16,8 +16,11 @@ from ..models import SavedProduct
 class SaveTest(TestCase):
     USER_USERNAME = "user1"
     USER_PASSWORD = "password"
-    
-    fixtures = [Path(__loader__.path).parent /
+
+    # We load the fixture from products
+    fixtures = [Path(__loader__.path).parent.parent.parent /
+                "products" /
+                "tests" /
                 "samples" /
                 "sample_data.json"]
 
@@ -48,7 +51,7 @@ class SaveTest(TestCase):
             "sub_product": 2
         })
         request.user = AnonymousUser()
-        response = views.save(request)
+        response = views.save.save(request)
 
         self.assertEqual(response.status_code, 401)
 
@@ -59,7 +62,7 @@ class SaveTest(TestCase):
         """
         request = self.factory.post("/product/save")
         request.user = self.user
-        response = views.save(request)
+        response = views.save.save(request)
         
         self.assertEqual(response.status_code, 400)
 
@@ -73,7 +76,7 @@ class SaveTest(TestCase):
             "sub_product": 5000
         })
         request.user = self.user
-        response = views.save(request)
+        response = views.save.save(request)
 
         self.assertEqual(response.status_code, 404)
 
@@ -87,7 +90,7 @@ class SaveTest(TestCase):
             "sub_product": 2
         })
         request.user = self.user
-        response = views.save(request)
+        response = views.save.save(request)
 
         self.assertEqual(response.status_code, 200)
 
@@ -96,5 +99,5 @@ class SaveTest(TestCase):
         # number it should be.
         savedproduct = SavedProduct.objects.get()
         self.assertEqual(savedproduct.user, self.user)
-        self.assertEqual(savedproduct.original_product.id, 1)
-        self.assertEqual(savedproduct.replaced_product.id, 2)
+        self.assertEqual(savedproduct.orig_product.id, 1)
+        self.assertEqual(savedproduct.sub_product.id, 2)

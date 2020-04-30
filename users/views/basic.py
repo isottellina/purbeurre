@@ -3,16 +3,16 @@
 # Filename: views.py
 # Author: Louise <louise>
 # Created: Mon Apr 27 14:00:21 2020 (+0200)
-# Last-Updated: Thu Apr 30 22:28:40 2020 (+0200)
+# Last-Updated: Thu Apr 30 23:15:37 2020 (+0200)
 #           By: Louise <louise>
 #
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.http import JsonResponse, Http404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from .forms import UserForm
+from ..forms import UserForm
 
 def signup(request):
     """
@@ -86,15 +86,3 @@ def signout(request):
 def account(request):
     return render(request, "users/account.html")
 
-@login_required
-def show_saved(request):
-    """
-    Show the saved products of a user.
-    """
-    savedproducts = request.user.saved_products.all()
-    products = [savedproduct.replaced_product
-                for savedproduct in savedproducts]
-    
-    return render(request, "users/show_saved.html", {
-        "products": products
-    })
