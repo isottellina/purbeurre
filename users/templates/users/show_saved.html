@@ -18,7 +18,7 @@
 	    {% endif %}
 	    {% for product in products %}
 	    <div class="col-lg-4 mb-4">
-	      <a href="{% url 'products:substitute' product.id %}">
+	      <a href="{% url 'products:info' product.id %}">
 		<div class="row justify-content-center">
 		  <div class="img-search-container">
 		    <img class="img-thumbnail img-search" src="{{ product.image }}" />

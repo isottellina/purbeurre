@@ -3,7 +3,7 @@
 # Filename: views_save.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 23:06:31 2020 (+0200)
-# Last-Updated: Thu Apr 30 23:16:10 2020 (+0200)
+# Last-Updated: Thu Apr 30 23:30:16 2020 (+0200)
 #           By: Louise <louise>
 # 
 from django.http import JsonResponse, Http404
@@ -84,7 +84,7 @@ def show_saved(request):
     Show the saved products of a user.
     """
     savedproducts = request.user.saved_products.all()
-    products = [savedproduct.replaced_product
+    products = [savedproduct.sub_product
                 for savedproduct in savedproducts]
     
     return render(request, "users/show_saved.html", {
