@@ -3,7 +3,7 @@
 # Filename: test_save.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 21:39:37 2020 (+0200)
-# Last-Updated: Thu Apr 30 22:09:21 2020 (+0200)
+# Last-Updated: Thu Apr 30 22:32:13 2020 (+0200)
 #           By: Louise <louise>
 # 
 from pathlib import Path
@@ -15,8 +15,6 @@ from ..models import SavedProduct
 
 class SaveTest(TestCase):
     USER_USERNAME = "user1"
-    USER_NAME = "Chantal"
-    USER_EMAIL = "chantal@beauregard.com"
     USER_PASSWORD = "password"
     
     fixtures = [Path(__loader__.path).parent /
@@ -27,8 +25,8 @@ class SaveTest(TestCase):
         self.factory = RequestFactory()
         self.user = User.objects.create_user(
             username=self.USER_USERNAME,
-            first_name=self.USER_NAME,
-            email=self.USER_EMAIL,
+            first_name="Chantal",
+            email="chantal@beauregard.com",
             password=self.USER_PASSWORD
         )
     

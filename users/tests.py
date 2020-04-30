@@ -3,7 +3,7 @@
 # Filename: tests.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 00:31:16 2020 (+0200)
-# Last-Updated: Wed Apr 29 00:49:43 2020 (+0200)
+# Last-Updated: Thu Apr 30 22:36:15 2020 (+0200)
 #           By: Louise <louise>
 #
 from django.test import TestCase
@@ -13,12 +13,17 @@ from django.contrib.auth.models import User
 from .views import signout as signout_view
 
 class TestUserCreate(TestCase):
+    USER_USERNAME = "user1"
+    USER_PASSWORD = "password"
+    NEW_USER_USERNAME = "user2"
+    NEW_USER_PASSWORD = "password"
+    
     def setUp(self):
         User.objects.create_user(
-            username='user1',
+            username=self.USER_USERNAME,
             first_name='Chantal',
             email='chantal@beauregard.com',
-            password='password'
+            password=self.USER_PASSWORD
         )
 
     def test_get(self):
@@ -42,10 +47,10 @@ class TestUserCreate(TestCase):
 
     def test_bad_mail(self):
         response = self.client.post('/user/signup', {
-            "username": "user2",
+            "username": self.NEW_USER_USERNAME,
             "first_name": "Hélène",
             "email": "helene@broek",
-            "password": "password"
+            "password": self.NEW_USER_PASSWORD
         })
 
         self.assertEqual(response.status_code, 400)
@@ -58,10 +63,10 @@ class TestUserCreate(TestCase):
         
     def test_user_already_exists(self):
         response = self.client.post('/user/signup', {
-            "username": "user1",
+            "username": self.USER_USERNAME,
             "first_name": "Hélène",
             "email": "helene@broek.com",
-            "password": "password"
+            "password": self.NEW_USER_PASSWORD
         })
 
         self.assertEqual(response.status_code, 409)
@@ -73,10 +78,10 @@ class TestUserCreate(TestCase):
 
     def test_user_created_successfully(self):
         response = self.client.post('/user/signup', {
-            "username": "user2",
+            "username": self.NEW_USER_USERNAME,
             "first_name": "Hélène",
             "email": "helene@broek.com",
-            "password": "password"
+            "password": self.NEW_USER_PASSWORD
         })
 
         self.assertRedirects(response, '/')
@@ -86,15 +91,15 @@ class TestUserCreate(TestCase):
         )
 
 class TestUserLogin(TestCase):
+    USER_USERNAME = 'user1'
+    USER_PASSWORD = 'password'
+
     def setUp(self):
-        self.username = 'user1'
-        self.password = 'password'
-        
         self.user = User.objects.create_user(
-            username=self.username,
+            username=self.USER_USERNAME,
             first_name='Chantal',
             email='chantal@beauregard.com',
-            password=self.password
+            password=self.USER_PASSWORD
         )
 
     def test_get(self):
@@ -105,7 +110,7 @@ class TestUserLogin(TestCase):
 
     def test_login_missing_data(self):
         response = self.client.post('/user/signin', {
-            "username": self.username
+            "username": self.USER_USERNAME
         })
 
         self.assertEqual(response.status_code, 400)
@@ -114,8 +119,8 @@ class TestUserLogin(TestCase):
 
     def test_login_bad_data(self):
         response = self.client.post('/user/signin', {
-            "username": self.username,
-            "password": self.password + "bad"
+            "username": self.USER_USERNAME,
+            "password": self.USER_PASSWORD + "bad"
         })
 
         self.assertEqual(response.status_code, 400)
@@ -124,8 +129,8 @@ class TestUserLogin(TestCase):
 
     def test_login_success(self):
         response = self.client.post('/user/signin', {
-            "username": self.username,
-            "password": self.password
+            "username": self.USER_USERNAME,
+            "password": self.USER_PASSWORD
         })
 
         self.assertRedirects(response, '/')
@@ -133,8 +138,8 @@ class TestUserLogin(TestCase):
 
     def test_login_success_next(self):
         response = self.client.post('/user/signin', {
-            "username": self.username,
-            "password": self.password,
+            "username": self.USER_USERNAME,
+            "password": self.USER_PASSWORD,
             "next": "/user/account"
         })
 
@@ -142,22 +147,22 @@ class TestUserLogin(TestCase):
         self.assertEqual(get_user(self.client).is_authenticated, True)
 
 class TestUserLogout(TestCase):
-    def setUp(self):
-        self.username = 'user1'
-        self.password = 'password'
+    USER_USERNAME = 'user1'
+    USER_PASSWORD = 'password'
         
+    def setUp(self):
         self.user = User.objects.create_user(
-            username=self.username,
+            username=self.USER_USERNAME,
             first_name='Chantal',
             email='chantal@beauregard.com',
-            password=self.password
+            password=self.USER_PASSWORD
         )
 
     def test_signout(self):
         # Sign in first
         signin_response = self.client.post("/user/signin", {
-            "username": self.username,
-            "password": self.password
+            "username": self.USER_USERNAME,
+            "password": self.USER_PASSWORD
         })
         self.assertEqual(get_user(self.client).is_authenticated, True)
 
@@ -168,15 +173,15 @@ class TestUserLogout(TestCase):
         self.assertEqual(get_user(self.client).is_authenticated, False)
 
 class TestUserAccount(TestCase):
+    USER_USERNAME = "user1"
+    USER_PASSWORD = "password"
+    
     def setUp(self):
-        self.username = 'user1'
-        self.password = 'password'
-        
         self.user = User.objects.create_user(
-            username=self.username,
+            username=self.USER_USERNAME,
             first_name='Chantal',
             email='chantal@beauregard.com',
-            password=self.password
+            password=self.USER_PASSWORD
         )
 
     def test_not_logged_in(self):
@@ -187,8 +192,8 @@ class TestUserAccount(TestCase):
     def test_success(self):
         # Sign in first
         signin_response = self.client.post("/user/signin", {
-            "username": self.username,
-            "password": self.password
+            "username": self.USER_USERNAME,
+            "password": self.USER_PASSWORD
         })
         self.assertEqual(get_user(self.client).is_authenticated, True)
 
