@@ -3,13 +3,19 @@
 # Filename: test_search.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 20:03:01 2020 (+0200)
-# Last-Updated: Thu Apr 30 21:44:52 2020 (+0200)
+# Last-Updated: Fri May  1 00:54:16 2020 (+0200)
 #           By: Louise <louise>
 #
+"""
+Tests the search function.
+"""
 from pathlib import Path
 from django.test import TestCase
 
 class SearchTest(TestCase):
+    """
+    All tests related to the search page.
+    """
     fixtures = [Path(__loader__.path).parent /
                 "samples" /
                 "sample_data.json"]

@@ -3,13 +3,19 @@
 # Filename: test_info.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 20:22:57 2020 (+0200)
-# Last-Updated: Thu Apr 30 21:43:22 2020 (+0200)
+# Last-Updated: Fri May  1 00:52:49 2020 (+0200)
 #           By: Louise <louise>
 #
+"""
+Tests the info page. This is fairly straightforward.
+"""
 from pathlib import Path
 from django.test import TestCase
 
 class InfoTest(TestCase):
+    """
+    The tests for the info page.
+    """
     fixtures = [Path(__loader__.path).parent /
                 "samples" /
                 "sample_data.json"]
