@@ -3,7 +3,7 @@
 # Filename: production.py
 # Author: Louise <louise>
 # Created: Fri May  1 01:04:57 2020 (+0200)
-# Last-Updated: Fri May  1 02:18:44 2020 (+0200)
+# Last-Updated: Fri May  1 13:32:21 2020 (+0200)
 #           By: Louise <louise>
 #
 import os
@@ -31,5 +31,7 @@ DATABASES = {
 # Middleware, add WhiteNoise to it
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
+# Compress settings for production
 COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = True
+LIBSASS_OUTPUT_STYLE = "compressed" # we don't need to have legible code
