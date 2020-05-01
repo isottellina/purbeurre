@@ -3,7 +3,7 @@
 # Filename: test_save.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 21:39:37 2020 (+0200)
-# Last-Updated: Fri May  1 00:28:03 2020 (+0200)
+# Last-Updated: Fri May  1 03:10:19 2020 (+0200)
 #           By: Louise <louise>
 #
 """
@@ -131,3 +131,17 @@ class TestShowSaved(UsersTestCase):
         response = self.client.get("/user/saved")
 
         self.assertRedirects(response, "/user/signin?next=/user/saved")
+
+    def test_normal(self):
+        """
+        Tests that the user can access the page and that
+        the correct information is on it.
+        """
+        self.client.login(
+            username=self.USER_USERNAME,
+            password=self.USER_PASSWORD
+        )
+        response = self.client.get("/user/saved")
+
+        self.assertTemplateUsed(response, "users/show_saved.html")
+        self.assertContains(response, "saucisse sèche aux noisettes")
