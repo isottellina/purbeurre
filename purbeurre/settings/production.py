@@ -3,7 +3,7 @@
 # Filename: production.py
 # Author: Louise <louise>
 # Created: Fri May  1 01:04:57 2020 (+0200)
-# Last-Updated: Fri May  1 02:03:40 2020 (+0200)
+# Last-Updated: Fri May  1 02:13:43 2020 (+0200)
 #           By: Louise <louise>
 #
 import os
@@ -30,3 +30,4 @@ DATABASES = {
 
 # Middleware, add WhiteNoise to it
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+COMPRESS_OFFLINE = os.environ.get('COMPRESS_OFFLINE', True)
