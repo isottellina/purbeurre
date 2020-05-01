@@ -4,5 +4,5 @@ django-libsass==0.8
 requests==2.23.0
 
 gunicorn==20.0.4
-whitenoise==5.0.1
+whitenoise[brotli]==5.0.1
 psycopg2==2.8.5

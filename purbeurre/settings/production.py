@@ -3,7 +3,7 @@
 # Filename: production.py
 # Author: Louise <louise>
 # Created: Fri May  1 01:04:57 2020 (+0200)
-# Last-Updated: Fri May  1 13:32:21 2020 (+0200)
+# Last-Updated: Fri May  1 14:05:12 2020 (+0200)
 #           By: Louise <louise>
 #
 import os
@@ -30,8 +30,14 @@ DATABASES = {
 
 # Middleware, add WhiteNoise to it
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Compress settings for production
+# We have to compress offline because WhiteNoise won't
+# service new files.
 COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = True
-LIBSASS_OUTPUT_STYLE = "compressed" # we don't need to have legible code
+
+# We don't need to have legible CSS in production, so
+# we use the compressed output style.
+LIBSASS_OUTPUT_STYLE = "compressed"
