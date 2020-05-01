@@ -3,7 +3,7 @@
 ;; Filename: README.md
 ;; Author: Louise <louise>
 ;; Created: Mon Apr 27 01:11:58 2020 (+0200)
-;; Last-Updated: Tue Apr 28 19:55:30 2020 (+0200)
+;; Last-Updated: Fri May  1 03:43:01 2020 (+0200)
 ;;           By: Louise <louise>
  -->
 # Pur beurre
@@ -37,3 +37,22 @@ To run the dev server, you can just run it using the manage script:
 ```bash
 python3 manage.py runserver
 ```
+## Deploying to production
+To deploy the app, you can just push the repo to Heroku, with a
+PostgreSQL setup. You have to set the variables :
+
+ - PURBEURRE_SECRET_KEY
+ - PURBEURRE_DB_NAME
+ - PURBEURRE_DB_USER
+ - PURBEURRE_DB_PASSWORD
+ - PURBEURRE_DB_HOST
+ - PURBEURRE_DB_PORT
+
+Once pushed, you have to populate the database once. To do so,
+just run:
+
+```bash
+heroku run DJANGO_SETTINGS_MODULE='purbeurre.settings.production' python manage.py populate_db
+```
+
+And wait for a bit.
