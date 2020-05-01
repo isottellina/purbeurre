@@ -3,7 +3,7 @@
 # Filename: production.py
 # Author: Louise <louise>
 # Created: Fri May  1 01:04:57 2020 (+0200)
-# Last-Updated: Fri May  1 02:02:10 2020 (+0200)
+# Last-Updated: Fri May  1 02:03:40 2020 (+0200)
 #           By: Louise <louise>
 #
 import os
@@ -12,7 +12,7 @@ from .base import *
 SECRET_KEY = os.environ.get("PURBEURRE_SECRET_KEY")
 DEBUG = False
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "https://louise-purbeurre.herokuapp.com/"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "louise-purbeurre.herokuapp.com"]
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
