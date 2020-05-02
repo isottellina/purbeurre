@@ -3,12 +3,13 @@
 # Filename: views_save.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 23:06:31 2020 (+0200)
-# Last-Updated: Thu Apr 30 23:30:16 2020 (+0200)
+# Last-Updated: Sat May  2 13:53:20 2020 (+0200)
 #           By: Louise <louise>
 # 
 from django.http import JsonResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
 
 from ..models import SavedProduct
 from products.models import Product
@@ -69,7 +70,18 @@ def save(request):
         sub_product=sub_product,
         user=request.user
     )
-    saved_product.save()
+
+    try:
+        # We have to guarantee uniqueness before saving it
+        saved_product.validate_unique()
+        saved_product.save()
+    except ValidationError:
+        return JsonResponse(
+            {
+                "error": "You already saved this product."
+            },
+            status=409
+        )
 
     # Finally we can return a 200 code.
     return JsonResponse(

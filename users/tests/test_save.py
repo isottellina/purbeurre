@@ -3,7 +3,7 @@
 # Filename: test_save.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 21:39:37 2020 (+0200)
-# Last-Updated: Fri May  1 03:10:19 2020 (+0200)
+# Last-Updated: Sat May  2 13:56:44 2020 (+0200)
 #           By: Louise <louise>
 #
 """
@@ -73,6 +73,31 @@ class SaveTest(UsersTestCase):
 
         self.assertEqual(response.status_code, 404)
 
+    def test_already_saved(self):
+        """
+        Tests that you can't save the same product twice.
+        """
+        self.client.login(
+            username=self.USER_USERNAME,
+            password=self.USER_PASSWORD
+        )
+        
+        # Save a product, before we can test that we
+        # can't save it once again
+        self.savedproduct = SavedProduct.objects.create(
+            orig_product=Product.objects.get(id=1),
+            sub_product=Product.objects.get(id=2),
+            user=self.user
+        )
+        
+        response = self.client.post("/user/save", {
+            "orig_product": 1,
+            "sub_product": 2
+        })
+
+        # We should have a HTTP 409 (Conflict) status code
+        self.assertEqual(response.status_code, 409)
+        
     def test_normal_query(self):
         """
         Tests that the product is saved without error

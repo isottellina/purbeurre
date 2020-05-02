@@ -3,7 +3,7 @@
 # Filename: models.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 22:49:36 2020 (+0200)
-# Last-Updated: Thu Apr 30 23:43:53 2020 (+0200)
+# Last-Updated: Sat May  2 13:48:54 2020 (+0200)
 #           By: Louise <louise>
 #
 """
@@ -29,3 +29,13 @@ class SavedProduct(models.Model):
     user = models.ForeignKey(User,
                              on_delete=models.CASCADE,
                              related_name='saved_products')
+
+    class Meta:
+        """
+        Add constraints to guarantee uniqueness of user and sub_product.
+        By that, I mean that a given user can save onle one time a sub_product.
+        """
+        constraints = [
+            models.UniqueConstraint(fields=["user", "sub_product"],
+                                    name="each_product_only_once")
+        ]
