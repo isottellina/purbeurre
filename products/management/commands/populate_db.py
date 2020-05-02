@@ -3,7 +3,7 @@
 # Filename: populate_db.py
 # Author: Louise <louise>
 # Created: Tue Apr 28 02:32:46 2020 (+0200)
-# Last-Updated: Fri May  1 00:43:11 2020 (+0200)
+# Last-Updated: Sat May  2 22:31:53 2020 (+0200)
 #           By: Louise <louise>
 #
 """
@@ -37,6 +37,9 @@ class Command(BaseCommand):
                             default=100,
                             help=("Maximum number of products per "
                                   "categories to fetch."))
+        parser.add_argument('--update',
+                            action='store_true',
+                            help="Doesn't delete the products already there.")
 
     def clean_database(self):
         """
@@ -71,10 +74,15 @@ class Command(BaseCommand):
         It usually makes only one query to the database, making
         it really fast.
         """
-        Category.objects.bulk_create([
-            Category(name=category['name'])
-            for category in categories
-        ])
+        Category.objects.bulk_create(
+            [
+                Category(name=category['name'])
+                for category in categories
+            ],
+            # Ignore the conflicts to be able to
+            # just add categories
+            ignore_conflicts=True
+        )
 
     def scrape_products(self, category, number):
         """
@@ -149,7 +157,13 @@ class Command(BaseCommand):
             for product in products['products']
         ]
 
-        Product.objects.bulk_create(product_models)
+        Product.objects.bulk_create(product_models,
+                                    # We ignore the conflicts
+                                    # and just don't add them.
+                                    # This happens when updating.
+                                    # Due to the API, it can also
+                                    # happen during normal init.
+                                    ignore_conflicts=True)
 
     def handle(self, **options):
         self.options = options
@@ -159,8 +173,9 @@ class Command(BaseCommand):
             lcode=options['lcode']
         )
 
-        # Clean database first
-        self.clean_database()
+        # Clean database first, if not in update mode
+        if not options['update']:
+            self.clean_database()
 
         categories = self.scrape_categories(options['categories'])
         self.save_categories(categories)

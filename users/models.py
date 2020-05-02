@@ -3,7 +3,7 @@
 # Filename: models.py
 # Author: Louise <louise>
 # Created: Thu Apr 30 22:49:36 2020 (+0200)
-# Last-Updated: Sat May  2 13:48:54 2020 (+0200)
+# Last-Updated: Sat May  2 21:41:22 2020 (+0200)
 #           By: Louise <louise>
 #
 """
@@ -37,5 +37,5 @@ class SavedProduct(models.Model):
         """
         constraints = [
             models.UniqueConstraint(fields=["user", "sub_product"],
-                                    name="each_product_only_once")
+                                    name="each_product_saved_only_once")
         ]
