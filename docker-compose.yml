@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./dbdata:/var/lib/postgresql/data
+    env_file:
+      - .env-secret
+
+  web:
+    command: gunicorn purbeurre.wsgi --bind :8000
+    build: .
+    depends_on:
+      - db
+    expose:
+      - "8000"
+    volumes:
+      - static-volume:/static
+    env_file:
+      - .env
+      - .env-secret
+      
+  nginx:
+    image: nginx
+    depends_on:
+      - web
+    ports:
+      - "1500:8000"
+    volumes:
+      - static-volume:/var/www/static
+      - ./config/nginx:/etc/nginx/conf.d:ro
+
+volumes:
+  static-volume:
