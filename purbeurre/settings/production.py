@@ -21,15 +21,15 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1", "purbeurre.zanier.org", "*"]
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get("POSTGRES_DB", "postgres"),
+        'NAME': os.environ.get("POSTGRES_DB", "purbeurre"),
         'USER': os.environ.get("POSTGRES_USER", "postgres"),
         'PASSWORD': os.environ.get("POSTGRES_PASSWORD"),
-        'HOST': os.environ.get("PURBEURRE_DB_HOST", "db"),
+        'HOST': os.environ.get("PURBEURRE_DB_HOST", "localhost"),
         'PORT': os.environ.get("PURBEURRE_DB_PORT", 5432),
     }
 }
 
-STATIC_ROOT = '/static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Compress settings for production
 # We have to compress offline because WhiteNoise won't
