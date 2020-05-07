@@ -1,6 +1,9 @@
 language: python
+python:
+  - "3.8"
+  
 install:
   - pip install -r requirements.txt
 
 script:
-  - pytest
+  - DJANGO_SETTINGS_MODULE=purbeurre.settings.testing python manage.py test
