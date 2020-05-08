@@ -3,7 +3,7 @@
 # Filename: production.py
 # Author: Louise <louise>
 # Created: Fri May  1 01:04:57 2020 (+0200)
-# Last-Updated: Fri May  8 16:23:51 2020 (+0200)
+# Last-Updated: Fri May  8 18:00:20 2020 (+0200)
 #           By: Louise <louise>
 #
 import os
@@ -30,25 +30,6 @@ DATABASES = {
         'HOST': os.environ.get("PURBEURRE_DB_HOST", "localhost"),
         'PORT': os.environ.get("PURBEURRE_DB_PORT", 5432),
     }
-}
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': '/tmp/purbeurre.log',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
 }
 
 sentry_sdk.init(
