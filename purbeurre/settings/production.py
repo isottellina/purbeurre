@@ -3,7 +3,7 @@
 # Filename: production.py
 # Author: Louise <louise>
 # Created: Fri May  1 01:04:57 2020 (+0200)
-# Last-Updated: Thu May  7 23:07:18 2020 (+0200)
+# Last-Updated: Fri May  8 16:23:51 2020 (+0200)
 #           By: Louise <louise>
 #
 import os
@@ -16,7 +16,7 @@ from sentry_sdk.integrations.django import DjangoIntegration
 SECRET_KEY = os.environ.get("PURBEURRE_SECRET_KEY", get_random_secret_key())
 DEBUG = False
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "purbeurre.zanier.org", "*"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "purbeurre.zanier.org"]
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
